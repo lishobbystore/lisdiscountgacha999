@@ -20,6 +20,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            overflow-x: hidden; /* ✅ Prevent horizontal scroll */
         }
 
         h1 {
@@ -135,12 +136,19 @@
 
         /* mobile responsiveness */
         @media screen and (max-width: 768px) {
+            #spinButton {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            
             .footer-desktop {
                 display: none;
             }
             .footer-mobile {
                 display: block;
                 margin-bottom: 50px;
+                width: 100%;
+                position: fixed;
             }
             
             h1 {
@@ -154,11 +162,13 @@
                 align-items: center;
                 justify-content: center;
                 gap: 20px;
+                padding-bottom: 80px; /* Ensure wheel doesn’t clash with fixed footer */
             }
 
             .side-panel {
                 margin-left: 0 !important;
                 margin-top: 20px;
+                margin-bottom: 60px; /* Add gap above footer */
             }
 
             .zeus-bg-left {
