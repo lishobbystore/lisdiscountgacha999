@@ -9,208 +9,210 @@
     <script src="Winwheel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            background-color: #add8e6;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            overflow-x: hidden; /* ✅ Prevent horizontal scroll */
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background-color: #add8e6;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        overflow-x: hidden; /* ✅ Prevent horizontal scroll */
+    }
+
+    h1 {
+        margin-top: 20px;
+        font-size: 28px;
+        color: #333;
+        text-shadow: 1px 1px #ffffff80;
+        z-index: 2;
+    }
+
+    .main {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .wheel-area {
+        position: relative;
+    }
+
+    canvas {
+        background-color: #add8e6;
+        border-radius: 50%;
+    }
+
+    .pointer {
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%) rotate(180deg);
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 30px solid red;
+        z-index: 10;
+    }
+
+    .side-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 50px;
+    }
+
+    #resultBox {
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        min-width: 200px;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        margin-bottom: 20px;
+    }
+
+    #spinButton {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+
+    .zeus-bg-left,
+    .zeus-bg-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 90%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 1;
+    }
+
+    .zeus-bg-left {
+        left: 15px;
+    }
+
+    .zeus-bg-right {
+        right: 15px;
+        transform: translateY(-50%) scaleX(-1);
+    }
+
+    .footer-desktop {
+        display: block;
+    }
+
+    .footer-mobile {
+        display: none;
+    }
+
+    .footer {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        background-color: #1976d2;
+        color: white;
+        font-size: 16px;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* ✅ Mobile responsiveness fixes */
+    @media screen and (max-width: 768px) {
+        #spinButton {
+            font-size: 14px;
+            padding: 8px 16px;
+            margin-bottom: 90px; /* Push button above footer */
+        }
+
+        .footer-desktop {
+            display: none;
+        }
+
+        .footer-mobile {
+            display: block;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: #1976d2;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            z-index: 99;
+            font-size: 14px;
         }
 
         h1 {
-            margin-top: 20px;
-            font-size: 28px;
-            color: #333;
-            text-shadow: 1px 1px #ffffff80;
-            z-index: 2;
+            font-size: 24px !important;
+            text-align: center;
+            margin-top: 12px;
         }
 
         .main {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            flex: 1;
-            width: 100%;
-            z-index: 2;
-        }
-
-        .wheel-area {
-            position: relative;
-        }
-
-        canvas {
-            background-color: #add8e6;
-            border-radius: 50%;
-        }
-
-        .pointer {
-            position: absolute;
-            top: 0px;
-            left: 50%;
-            transform: translateX(-50%) rotate(180deg);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 30px solid red;
-            z-index: 10;
+            justify-content: flex-start;
+            gap: 10px;
+            padding-top: 10px;
+            padding-bottom: 100px; /* Ensure full wheel + button visible above footer */
         }
 
         .side-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-left: 50px;
-        }
-
-        #resultBox {
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            min-width: 200px;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            margin-bottom: 20px;
-        }
-
-        #spinButton {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #1976d2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: "Comic Sans MS", cursive, sans-serif;
+            margin-left: 0 !important;
+            margin-top: 0;
+            margin-bottom: 40px;
         }
 
         .zeus-bg-left,
         .zeus-bg-right {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 90%;
-            z-index: 0;
+            height: auto;
+            max-height: 200px;
+            top: 15%;
+            opacity: 0.85;
             pointer-events: none;
-            opacity: 1;
+            z-index: 0;
         }
 
         .zeus-bg-left {
-            left: 15px;
+            left: -30px;
+            transform: translateY(-50%) scale(0.8);
         }
 
         .zeus-bg-right {
-            right: 15px;
-            transform: translateY(-50%) scaleX(-1);
-            /* Flip horizontally */
+            right: -30px;
+            transform: translateY(-50%) scale(0.8) scaleX(-1);
         }
 
-        .footer-desktop {
-            display: block;
+        canvas {
+            width: 85vw !important;
+            height: auto !important;
         }
-        .footer-mobile {
-            display: none;
-        }
+    }
 
-        .footer {
-            width: 100%;
-            padding: 10px;
-            text-align: center;
-            background-color: #1976d2;
-            color: white;
-            font-size: 16px;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            position: relative;
-            z-index: 2;
-        }
+    canvas[style*="position: fixed"] {
+        z-index: 0 !important;
+        pointer-events: none;
+    }
+</style>
 
-        /* mobile responsiveness */
-        @media screen and (max-width: 768px) {
-            #spinButton {
-                font-size: 14px;
-                padding: 8px 16px;
-            }
-            
-            .footer-desktop {
-                display: none;
-            }
-            .footer-mobile {
-                display: block;
-                width: 100%;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                background-color: #1976d2;
-                color: white;
-                padding: 10px;
-                text-align: center;
-                z-index: 5;
-                font-size: 14px;
-            }
-            
-            h1 {
-                font-size: 24px !important;
-                text-align: center;
-                margin-top: 12px;
-            }
-
-            .main {
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-                padding-bottom: 80px; /* Ensure wheel doesn’t clash with fixed footer */
-            }
-
-            .side-panel {
-                margin-left: 0 !important;
-                margin-top: 20px;
-                margin-bottom: 60px; /* Add gap above footer */
-            }
-
-            .zeus-bg-left {
-                height: 50%;
-                opacity: 1;
-                top: 20%;
-                /* move it up */
-                left: -60px;
-                /* move it to the left */
-                transform: translateY(-50%) scale(0.9);
-                /* scale slightly smaller */
-            }
-
-            .zeus-bg-right {
-                height: 50%;
-                opacity: 1;
-                top: 20%;
-                /* move it up */
-                right: -60px;
-                /* move it to the right */
-                transform: translateY(-50%) scale(0.9);
-                /* scale slightly smaller */
-            }
-
-            canvas {
-                width: 90vw !important;
-                height: auto !important;
-            }
-        }
-
-        canvas[style*="position: fixed"] {
-            z-index: 0 !important;
-            pointer-events: none;
-        }
-    </style>
 </head>
 
 <body>
