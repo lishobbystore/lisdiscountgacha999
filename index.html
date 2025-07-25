@@ -134,12 +134,12 @@
         z-index: 2;
     }
 
-    /* ✅ Mobile responsiveness fixes */
+/* ✅ MOBILE ONLY SECTION */
     @media screen and (max-width: 768px) {
         #spinButton {
             font-size: 14px;
             padding: 8px 16px;
-            margin-bottom: 90px; /* Push button above footer */
+            margin-bottom: 10px;
         }
 
         .footer-desktop {
@@ -171,39 +171,41 @@
             align-items: center;
             justify-content: flex-start;
             gap: 10px;
-            padding-top: 10px;
-            padding-bottom: 100px; /* Ensure full wheel + button visible above footer */
+            padding-top: 0;
+            padding-bottom: 160px; /* ✅ More space for result + button + footer */
         }
 
         .side-panel {
             margin-left: 0 !important;
             margin-top: 0;
-            margin-bottom: 40px;
-        }
-
-        .zeus-bg-left,
-        .zeus-bg-right {
-            height: auto;
-            max-height: 200px;
-            top: 15%;
-            opacity: 0.85;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .zeus-bg-left {
-            left: -30px;
-            transform: translateY(-50%) scale(0.8);
-        }
-
-        .zeus-bg-right {
-            right: -30px;
-            transform: translateY(-50%) scale(0.8) scaleX(-1);
+            margin-bottom: 0;
         }
 
         canvas {
             width: 85vw !important;
             height: auto !important;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        #resultBox {
+            margin-top: 10px;
+        }
+
+        .zeus-bg-left,
+        .zeus-bg-right {
+            top: unset;
+            bottom: 80px; /* Position Zeus under wheel */
+            height: 140px;
+            max-width: 130px;
+        }
+
+        .zeus-bg-left {
+            left: 20%;
+        }
+
+        .zeus-bg-right {
+            right: 20%;
         }
     }
 
