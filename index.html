@@ -9,218 +9,204 @@
     <script src="Winwheel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background-color: #add8e6;
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-        overflow-x: hidden; /* ✅ Prevent horizontal scroll */
-    }
-
-    h1 {
-        margin-top: 20px;
-        font-size: 28px;
-        color: #333;
-        text-shadow: 1px 1px #ffffff80;
-        z-index: 2;
-    }
-
-    .main {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        width: 100%;
-        z-index: 2;
-    }
-
-    .wheel-area {
-        position: relative;
-    }
-
-    canvas {
-        background-color: #add8e6;
-        border-radius: 50%;
-    }
-
-    .pointer {
-        position: absolute;
-        top: 0px;
-        left: 50%;
-        transform: translateX(-50%) rotate(180deg);
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-bottom: 30px solid red;
-        z-index: 10;
-    }
-
-    .side-panel {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 50px;
-    }
-
-    #resultBox {
-        padding: 20px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        font-size: 20px;
-        font-weight: bold;
-        text-align: center;
-        min-width: 200px;
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        margin-bottom: 20px;
-    }
-
-    #spinButton {
-        padding: 10px 20px;
-        font-size: 18px;
-        background-color: #1976d2;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-family: "Comic Sans MS", cursive, sans-serif;
-    }
-
-    .zeus-bg-left,
-    .zeus-bg-right {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 90%;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 1;
-    }
-
-    .zeus-bg-left {
-        left: 15px;
-    }
-
-    .zeus-bg-right {
-        right: 15px;
-        transform: translateY(-50%) scaleX(-1);
-    }
-
-    .footer-desktop {
-        display: block;
-    }
-
-    .footer-mobile {
-        display: none;
-    }
-
-    .footer {
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-        background-color: #1976d2;
-        color: white;
-        font-size: 16px;
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        position: relative;
-        z-index: 2;
-    }
-
-/* ✅ MOBILE ONLY SECTION */
-    @media screen and (max-width: 768px) {
-        #spinButton {
-            font-size: 14px;
-            padding: 8px 16px;
-            margin-bottom: 10px;
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #add8e6;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer-desktop {
-            display: none;
-        }
-
-        .footer-mobile {
-            display: block;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            background-color: #1976d2;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            z-index: 99;
-            font-size: 14px;
-        }
-
-        h1 {
-            font-size: 24px !important;
-            text-align: center;
-            margin-top: 12px;
+        .gacha-logo {
+            margin-top: 3px;
+            width: 150px;
+            max-height: 10vw;
+            z-index: 2;
         }
 
         .main {
-            flex-direction: column;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
             align-items: center;
-            justify-content: flex-start;
-            gap: 10px;
-            padding-top: 0;
-            padding-bottom: 160px; /* ✅ More space for result + button + footer */
+            flex: 1;
+            width: 100%;
+            z-index: 2;
         }
 
-        .side-panel {
-            margin-left: 0 !important;
-            margin-top: 0;
-            margin-bottom: 0;
+        .wheel-area {
+            position: relative;
         }
 
         canvas {
-            width: 85vw !important;
-            height: auto !important;
-            margin-top: 30px;
-            margin-bottom: 20px;
+            background-color: #add8e6;
+            border-radius: 50%;
+        }
+
+        .pointer {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid red;
+            z-index: 10;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 50px;
         }
 
         #resultBox {
-            margin-top: 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 200px;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            margin-bottom: 20px;
+        }
+
+        #spinButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Comic Sans MS", cursive, sans-serif;
         }
 
         .zeus-bg-left,
         .zeus-bg-right {
-            top: unset;
-            bottom: 80px; /* Position Zeus under wheel */
-            height: 140px;
-            max-width: 130px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 90%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 1;
         }
 
         .zeus-bg-left {
-            left: 20%;
+            left: 15px;
         }
 
         .zeus-bg-right {
-            right: 20%;
+            right: 15px;
+            transform: translateY(-50%) scaleX(-1);
         }
-    }
 
-    canvas[style*="position: fixed"] {
-        z-index: 0 !important;
-        pointer-events: none;
-    }
-</style>
+        .footer-desktop {
+            display: block;
+        }
 
+        .footer-mobile {
+            display: none;
+        }
+
+        .footer {
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background-color: #1976d2;
+            color: white;
+            font-size: 16px;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .footer-desktop {
+                display: none;
+            }
+
+            .footer-mobile {
+                display: block;
+                position: relative;
+                margin-top: 5px;
+                width: 100%;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .gacha-logo {
+                width: 50px;
+                max-height: 50px;
+                margin-top: 3px;
+            }
+
+            .main {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                /* tighter layout */
+            }
+
+            .side-panel {
+                margin-left: 0 !important;
+                margin-top: 5px;
+                /* closer to the wheel */
+            }
+
+            #resultBox {
+                margin-bottom: 10px;
+                /* tighter spacing */
+            }
+
+            .zeus-bg-left {
+                height: 50%;
+                opacity: 1;
+                top: 20%;
+                left: -60px;
+                transform: translateY(-50%) scale(0.9);
+            }
+
+            .zeus-bg-right {
+                height: 50%;
+                opacity: 1;
+                top: 20%;
+                right: -60px;
+                transform: translateY(-50%) scale(0.9);
+            }
+
+            canvas {
+                width: 90vw !important;
+                height: auto !important;
+            }
+        }
+
+
+        canvas[style*="position: fixed"] {
+            z-index: 0 !important;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
-    <img src="logo.png" alt="Lis Logo" style="max-height : 150px; max-width: 320px; margin-top: 5px; z-index: 0.5;" />
+    <!-- Logo Title -->
+    <img src="logo.png" alt="Lis Discount Gacha 999" class="gacha-logo" />
 
-    <!-- Zeus images -->
+    <!-- Zeus Images -->
     <img src="zeus.png" alt="Zeus Left" class="zeus-bg-left" />
     <img src="zeus.png" alt="Zeus Right" class="zeus-bg-right" id="zeusRight" />
 
@@ -247,57 +233,57 @@
             'textAlignment': 'outer',
             'numSegments': 50,
             'segments': [
-                  { fillStyle: '#FFD700', text: '50%' },   // 0
-                  { fillStyle: '#3a7bcc', text: '10%' },   // 1
-                  { fillStyle: '#3a7bcc', text: '10%' },   // 2
-                  { fillStyle: '#79aee3', text: '20%' },   // 3
-                  { fillStyle: '#3a7bcc', text: '10%' },   // 4
-                  { fillStyle: '#3a7bcc', text: '10%' },   // 5
-                  { fillStyle: '#8bbbe8', text: '30%' },   // 6
-                  { fillStyle: '#79aee3', text: '20%' },   // 7
-                  { fillStyle: '#3a7bcc', text: '10%' },   // 8
-                  { fillStyle: '#79aee3', text: '25%' },   // 9
-                  { fillStyle: '#3a7bcc', text: '10%' },   //10
-                  { fillStyle: '#79aee3', text: '20%' },   //11
-                  { fillStyle: '#3a7bcc', text: '10%' },   //12
-                  { fillStyle: '#0088CC', text: '15%' },   //13
-                  { fillStyle: '#3a7bcc', text: '10%' },   //14
-                  { fillStyle: '#79aee3', text: '20%' },   //15
-                  { fillStyle: '#FF7F50', text: '35%' },   //16
-                  { fillStyle: '#3a7bcc', text: '10%' },   //17
-                  { fillStyle: '#8bbbe8', text: '30%' },   //18
-                  { fillStyle: '#79aee3', text: '20%' },   //19
-                  { fillStyle: '#3a7bcc', text: '10%' },   //20
-                  { fillStyle: '#0088CC', text: '15%' },   //21
-                  { fillStyle: '#3a7bcc', text: '10%' },   //22
-                  { fillStyle: '#79aee3', text: '20%' },   //23
-                  { fillStyle: '#3a7bcc', text: '10%' },   //24
-                  { fillStyle: '#0088CC', text: '15%' },   //25
-                  { fillStyle: '#3a7bcc', text: '10%' },   //26
-                  { fillStyle: '#79aee3', text: '20%' },   //27
-                  { fillStyle: '#3a7bcc', text: '10%' },   //28
-                  { fillStyle: '#3a7bcc', text: '10%' },   //29
-                  { fillStyle: '#8bbbe8', text: '30%' },   //30
-                  { fillStyle: '#79aee3', text: '20%' },   //31
-                  { fillStyle: '#3a7bcc', text: '10%' },   //32
-                  { fillStyle: '#0088CC', text: '15%' },   //33
-                  { fillStyle: '#3a7bcc', text: '10%' },   //34
-                  { fillStyle: '#79aee3', text: '20%' },   //35
-                  { fillStyle: '#3a7bcc', text: '10%' },   //36
-                  { fillStyle: '#79aee3', text: '25%' },   //37
-                  { fillStyle: '#3a7bcc', text: '10%' },   //38
-                  { fillStyle: '#79aee3', text: '20%' },   //39
-                  { fillStyle: '#FF7F50', text: '35%' },   //40
-                  { fillStyle: '#3a7bcc', text: '10%' },   //41
-                  { fillStyle: '#8bbbe8', text: '30%' },   //42
-                  { fillStyle: '#79aee3', text: '20%' },   //43
-                  { fillStyle: '#3a7bcc', text: '10%' },   //44
-                  { fillStyle: '#0088CC', text: '15%' },   //45
-                  { fillStyle: '#3a7bcc', text: '10%' },   //46
-                  { fillStyle: '#79aee3', text: '20%' },   //47
-                  { fillStyle: '#8bbbe8', text: '30%' },   //48
-                  { fillStyle: '#3a7bcc', text: '10%' }    //49
-                ],
+                { fillStyle: '#FFD700', text: '50%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#8bbbe8', text: '30%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '25%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#0088CC', text: '15%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#FF7F50', text: '35%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#8bbbe8', text: '30%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#0088CC', text: '15%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#0088CC', text: '15%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#8bbbe8', text: '30%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#0088CC', text: '15%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '25%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#FF7F50', text: '35%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#8bbbe8', text: '30%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#0088CC', text: '15%' },
+                { fillStyle: '#3a7bcc', text: '10%' },
+                { fillStyle: '#79aee3', text: '20%' },
+                { fillStyle: '#8bbbe8', text: '30%' },
+                { fillStyle: '#3a7bcc', text: '10%' }
+            ],
             'animation': {
                 'type': 'spinToStop',
                 'duration': 6,
@@ -308,7 +294,6 @@
                     document.getElementById("resultBox").innerHTML =
                         "🎯 Result: <br><strong>" + indicatedSegment.text + "</strong>";
 
-                    // Confetti only for 50%
                     if (indicatedSegment.text === "50%") {
                         confetti({
                             particleCount: 120,
@@ -327,13 +312,14 @@
             theWheel.startAnimation();
         });
     </script>
-</body>
+
     <div class="footer footer-desktop">
         &copy; 2025 Lichtschein Hobby Store | Follow @lishobbystore on Instagram for more promos! 🚀
     </div>
     <div class="footer footer-mobile">
-        &copy; 2025 Lichtschein Hobby Store <br/>
-        Follow @lishobbystore on Instagram for more promos!
+        &copy; 2025 Lichtschein Hobby Store <br />
     </div>
+
+</body>
 
 </html>
